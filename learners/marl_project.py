@@ -83,13 +83,13 @@ class QLearner:
 
         # added by keegan
         r_in, _, _ = self.critic(batch)
-        print(r_in.shape)
-        print(actions.shape)
+#         print(r_in.shape)
+#         print(actions.shape)
         r_in = r_in[:,:-1]
         r_in_taken = th.gather(r_in, dim=3, index=actions)
-        print(r_in_taken.shape)
+#         print(r_in_taken.shape)
         r_in = r_in_taken.squeeze(-1)
-        print(r_in.shape)
+#         print(r_in.shape)
 
 
 
@@ -186,8 +186,8 @@ class QLearner:
             # update reward fn here!!!
             # Calculate 1-step Q-Learning targets
             #targets = rewards + self.args.gamma * (1 - terminated) * target_max_qvals
-            print(r_in.shape, rewards.shape, target_max_qvals.shape)
-            targets = r_in[:, :, agent].unsqueeze(axis=2) + rewards + self.args.gamma * (1 - terminated) * target_max_qvals
+#             print(r_in.shape, rewards.shape, target_max_qvals.shape)
+            targets = r_in[:, :, agent].unsqueeze(dim=2) + rewards + self.args.gamma * (1 - terminated) * target_max_qvals
             if self.args.mi_intrinsic:
                 assert self.args.rnn_discrim is False
                 targets = targets + self.args.mi_scaler * discrim_loss.view_as(rewards)
@@ -207,7 +207,7 @@ class QLearner:
 
             # Optimise
             self.optimiser.zero_grad()
-            loss.backward()
+            loss.backward(retain_graph=True)
             grad_norm = th.nn.utils.clip_grad_norm_(self.params, self.args.grad_norm_clip)
             self.optimiser.step()
 
