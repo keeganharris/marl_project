@@ -5,6 +5,7 @@ from .actor_critic_learner import ActorCriticLearner
 from .qtran_learner import QLearner as QTranLearner
 from .icql_learner import ICQLLearner
 from .liir_learner import LIIRLearner
+from .marl_project import QLearner as MARLProject
 
 REGISTRY = {}
 
@@ -15,3 +16,4 @@ REGISTRY["actor_critic_learner"] = ActorCriticLearner
 REGISTRY["qtran_learner"] = QTranLearner
 REGISTRY["icql_learner"] = ICQLLearner
 REGISTRY["liir_learner"] = LIIRLearner
+REGISTRY["marl_project"] = MARLProject
